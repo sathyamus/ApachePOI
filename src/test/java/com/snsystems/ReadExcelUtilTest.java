@@ -1,26 +1,28 @@
 package com.snsystems;
 
-import static org.junit.Assert.assertTrue;
+import net.sf.jett.transform.ExcelTransformer;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.junit.Test;
 
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.sf.jett.transform.ExcelTransformer;
-import net.sf.jett.util.SheetUtil;
-
-import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-import org.junit.Test;
+import static org.junit.Assert.assertTrue;
 
 public class ReadExcelUtilTest {
 
 	@Test
 	public void test() throws Exception {
-		
-		int rowsCount = ReadExcelUtil.read("E:\\EclipseLunaWS\\ExcelSheet.xls");
+
+		String path = Paths.get("src/main/resources/ExcelSheet.xls").toUri().getPath();
+		System.out.println(path);
+
+		int rowsCount = ReadExcelUtil.read(path);
+		System.out.println(rowsCount);
 		assertTrue("Row Count: ", rowsCount != 0);
-		
-		
+
 		Map<String, Object> beans = new HashMap<String, Object>();
 		beans.put("var", "Hello");
 		beans.put("var2", "World");

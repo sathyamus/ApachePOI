@@ -7,6 +7,7 @@ import java.util.Iterator;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
 
 
@@ -19,7 +20,7 @@ public class ReadExcelUtil {
 		HSSFWorkbook workbook = new HSSFWorkbook(file);
 		
 		HSSFSheet sheet = workbook.getSheetAt(0);
-		
+
 		//Iterate through each rows from first sheet
         Iterator<Row> rowIterator = sheet.iterator();
         while(rowIterator.hasNext()) {
@@ -30,14 +31,18 @@ public class ReadExcelUtil {
             while(cellIterator.hasNext()) {
                  
                 Cell cell = cellIterator.next();
-		
-                System.out.println(cell.getStringCellValue());
+
+                if ( CellType.STRING.equals(cell.getCellTypeEnum()) ) {
+                    System.out.println(cell.getStringCellValue());
+                }
+                if ( CellType.NUMERIC.equals(cell.getCellTypeEnum()) ) {
+                    System.out.println(cell.getNumericCellValue());
+                }
             }
         }
             
-		return 0;
-		
-		
+		return sheet.getLastRowNum();
+
 	}
 
 }
